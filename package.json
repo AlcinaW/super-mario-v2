@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/AlcinaW/super-mario-v2/issues"
   },
-  "homepage": "https://github.com/AlcinaW/super-mario-v2#readme"
+  "homepage": "https://github.com/AlcinaW/super-mario-v2#readme",
+  "dependencies": {
+    "server": "^1.0.18"
+  }
 }
