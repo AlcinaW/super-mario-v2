@@ -21,4 +21,12 @@ loadImage('/img/tiles.png')
       sprites.drawTile('sky', context, x, y);
     }
   }
+
+  //ground should show left to right, not the entire area
+  for (let x = 0; x < 25; ++x) {
+    for (let y = 12; y < 14; ++y) {
+      sprites.drawTile('ground', context, x, y);
+    }
+  }
+
 });
