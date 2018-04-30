@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "serve ./public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,6 @@
   },
   "homepage": "https://github.com/AlcinaW/super-mario-v2#readme",
   "dependencies": {
-    "server": "^1.0.18"
+    "serve": "^6.5.6"
   }
 }
