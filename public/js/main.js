@@ -6,7 +6,7 @@ const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 
 //take background from JSON, draw on context using sprites
-function drawBackground(background, contect, sprites){
+function drawBackground(background, context, sprites){
   //loop over all ranges, interpret array (the 4 numbers)
   background.ranges.forEach(([x1, x2, y1, y2]) => {
     //loop to draw sky
@@ -15,31 +15,45 @@ function drawBackground(background, contect, sprites){
         sprites.drawTile(background.tile, context, x, y);
       }
     }
-
   });
 }
 
-loadImage('/img/tiles.png')
-.then(image => {
-  const sprites = new SpriteSheet(image);
-  //define the sprites with names
-  sprites.define('ground', 0, 0);
-  sprites.define('sky', 3, 23);
-  //sprites.draw('sky', context, 45, 62);
 
-  //load the JSON file that has the same name as defined here
-  loadLevel('1-1')
-  .then(level =>{
-    console.log(level);
-    level.backgrounds.forEach(bg => {
-      drawBackground(bg, context, sprites);
-    });
+function loadMarioSprite() {
+  //return whole promise chain
+  return loadImage('/img/characters.gif')
+  .then(image => {
+    const sprites = new SpriteSheet(image, 16, 16);
+    //define the sprites with names
+    sprites.define('idle', 16, 3);
+    return sprites;
   });
+}
 
-  //ground should show left to right, not the entire area
-  // for (let x = 0; x < 25; ++x) {
-  //   for (let y = 12; y < 14; ++y) {
-  //     sprites.drawTile('ground', context, x, y);
-  //   }
-  // }
+
+
+
+function loadBackgroundSprites() {
+  //return whole promise chain
+  return loadImage('/img/tiles.png')
+  .then(image => {
+    const sprites = new SpriteSheet(image, 16, 16);
+    //define the sprites with names
+    sprites.define('ground', 0, 0);
+    sprites.define('sky', 3, 23);
+    return sprites;
+  });
+}
+
+//make them run parallel
+Promise.all([
+  loadMarioSprite(),
+  loadBackgroundSprites(),
+  loadLevel('1-1'),
+])
+.then(([ marioSprite, sprites, level]) => {
+  level.backgrounds.forEach(background => {
+    drawBackground(background, context, sprites);
+  });
+  marioSprite.draw('idle', context, 64, 64);
 });
