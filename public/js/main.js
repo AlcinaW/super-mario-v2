@@ -1,9 +1,5 @@
-import SpriteSheet from './spritesheet.js';
-import {loadImage, loadLevel} from './loaders.js';
-
-//create canvas by browser
-const canvas = document.getElementById('screen');
-const context = canvas.getContext('2d');
+import {loadLevel} from './loaders.js';
+import {loadMarioSprite, loadBackgroundSprites} from './sprites.js';
 
 //take background from JSON, draw on context using sprites
 function drawBackground(background, context, sprites){
@@ -18,32 +14,9 @@ function drawBackground(background, context, sprites){
   });
 }
 
-
-function loadMarioSprite() {
-  //return whole promise chain
-  return loadImage('/img/characters.gif')
-  .then(image => {
-    const sprites = new SpriteSheet(image, 16, 16);
-    //define the sprites with names
-    sprites.define('idle', 16, 3);
-    return sprites;
-  });
-}
-
-
-
-
-function loadBackgroundSprites() {
-  //return whole promise chain
-  return loadImage('/img/tiles.png')
-  .then(image => {
-    const sprites = new SpriteSheet(image, 16, 16);
-    //define the sprites with names
-    sprites.define('ground', 0, 0);
-    sprites.define('sky', 3, 23);
-    return sprites;
-  });
-}
+//create canvas by browser
+const canvas = document.getElementById('screen');
+const context = canvas.getContext('2d');
 
 //make them run parallel
 Promise.all([

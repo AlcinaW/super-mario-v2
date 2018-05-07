@@ -6,28 +6,32 @@ export default class SpriteSheet {
     //save buffer to map
     this.tiles = new Map();
   }
-  define(name, x, y){
+  define(name, x, y, width, height){
     //draw buffer to save image instead of drawing from whole image every time
     //create canvas programmatically with JS
     const buffer = document.createElement('canvas');
     //set height and width
-    buffer.width = this.width;
-    buffer.height = this.height;
+    buffer.width = width;
+    buffer.height = height;
     buffer
       .getContext('2d')
       .drawImage(
         this.image,
-        this.width * x,
-        this.height * y,
-        this.width,
-        this.height,
+        x,
+        y,
+        width,
+        height,
         0,
         0,
-        this.width,
-        this.height);
+        width,
+        height);
         //name as key, buffer as value
         this.tiles.set(name, buffer);
   }
+  defineTile(name, x, y) {
+    this.define(name, x * this.width, y * this.height, this.width, this.height);
+  }
+
   //draw method
   draw(name, context, x, y) {
     const buffer = this.tiles.get(name);
