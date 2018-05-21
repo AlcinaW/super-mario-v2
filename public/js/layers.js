@@ -26,3 +26,10 @@ export function createBackgroundLayer(backgrounds, sprites) {
     context.drawImage(buffer, 0, 0);
   };
 }
+
+//higher order function that takes sprite and position
+export function createSpriteLayer(entity) {
+    return function drawSpriteLayer(context) {
+        entity.draw(context);
+    };
+}
