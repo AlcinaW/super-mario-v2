@@ -1,4 +1,6 @@
 import Entity from './entity.js';
+import Jump from './traits/jump.js';
+import Velocity from './traits/velocity.js';
 import {loadMarioSprite} from './sprites.js';
 
 export function createMario(){
@@ -6,15 +8,14 @@ export function createMario(){
   .then(sprite => {
     const mario = new Entity();
 
+    mario.addTrait(new Velocity());
+    mario.addTrait(new Jump());
+
     mario.draw = function drawMario(context){
       sprite.draw('idle', context, this.pos.x, this.pos.y);
     }
 
-    //when you attach a function to an object in JS, you can access this
-    mario.update = function updateMario(deltaTime){
-      this.pos.x += this.vel.x * deltaTime;
-      this.pos.y += this.vel.y * deltaTime;
-    }
     return mario;
+
   });
 }
