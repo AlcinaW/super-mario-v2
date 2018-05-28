@@ -18,10 +18,6 @@ Promise.all([
   loadLevel('1-1'),
 ])
 .then(([ mario, backgroundSprites, level]) => {
-  const comp = new Compositor();
-
-  const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites);
-  comp.layers.push(backgroundLayer);
 
   const gravity = 2000;
   mario.pos.set(64, 180);
@@ -38,9 +34,6 @@ Promise.all([
   });
 
   input.listenTo(window);
-
-  const spriteLayer = createSpriteLayer(mario);
-  comp.layers.push(spriteLayer);
 
   const timer = new Timer(1/60);
   timer.update = function update(deltaTime) {
